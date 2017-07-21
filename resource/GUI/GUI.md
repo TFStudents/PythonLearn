@@ -6,7 +6,7 @@ python提供了多个图形开发界面的库，几个常用Python GUI库如下�
 * wxPython：wxPython 是一款开源软件，是 Python 语言的一套优秀的 GUI 图形库，允许 Python 程序员很方便的创建完整的、功能键全的 GUI 用户界面。
 * Jython：Jython程序可以和Java无缝集成。除了一些标准模块，Jython使用Java的模块。Jython几乎拥有标准的Python中不依赖于C语言的全部模块。比如，Jython的用户界面将使用Swing，AWT或者SWT。Jython可以被动态或静态地编译成Java字节码。
 
-## Tkinter 编程
+## 1. Tkinter 编程
 
 Tkinter 是Python的标准GUI库。Python使用Tkinter可以快速的创建GUI应用程序。
 由于Tkinter是内置到python的安装包中、只要安装好Python之后就能import Tkinter库、而且IDLE也是用Tkinter编写而成、对于简单的图形界面Tkinter还是能应付自如。
@@ -60,7 +60,7 @@ root.mainloop()                 # 进入消息循环
 
 ![Alt text](../../resource/pic/gui2.png)
 
-## Tkinter 组件
+## 2. Tkinter 组件
 Tkinter的提供各种控件，如按钮，标签和文本框，一个GUI应用程序中使用。这些控件通常被称为控件或者部件。
 目前有15种Tkinter的部件。我们提出这些部件以及一个简短的介绍，在下面的表:
 
@@ -86,7 +86,7 @@ Tkinter的提供各种控件，如按钮，标签和文本框，一个GUI应用�
 | LabelFrame | labelframe 是一个简单的容器控件。常用与复杂的窗口布局。 |
 | tkMessageBox | 用于显示你应用程序的消息框。|
 
-## 标准属性
+## 3. 标准属性
 
 标准属性也就是所有控件的共同属性，如大小，字体和颜色等等。
 
@@ -100,7 +100,7 @@ Tkinter的提供各种控件，如按钮，标签和文本框，一个GUI应用�
 | Bitmap | 位图； |
 | Cursor | 光标； |
 
-## 几何管理
+## 4. 几何管理
 
 Tkinter控件有特定的几何状态管理方法，管理整个控件区域组织，一下是Tkinter公开的几何管理类：包、网格、位置
 

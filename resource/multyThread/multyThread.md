@@ -14,7 +14,7 @@
 * 线程可以被抢占（中断）。  
 * 在其他线程正在运行时，线程可以暂时搁置（也称为睡眠） -- 这就是线程的退让。  
   
-## 1.开始学习Python线程
+## 1. 开始学习Python线程
 
 Python中使用线程有两种方式：函数或者用类来包装线程对象。  
 函数式：调用thread模块中的start_new_thread()函数来产生新线程。语法如下:  
@@ -70,7 +70,7 @@ Thread-2: Fri Jul 21 19:14:19 2017
 ```
 线程的结束一般依靠线程函数的自然结束；也可以在线程函数中调用thread.exit()，他抛出SystemExit exception，达到退出线程的目的。  
 
-## 2.线程模块
+## 2. 线程模块
 
 Python通过两个标准库thread和threading提供对线程的支持。thread提供了低级别的、原始的线程以及一个简单的锁。  
 thread 模块提供的其他方法：  
@@ -87,7 +87,7 @@ thread 模块提供的其他方法：
 * getName(): 返回线程名。  
 * setName(): 设置线程名。  
 
-## 3.使用Threading模块创建线程
+## 3. 使用Threading模块创建线程
 
 使用Threading模块创建线程，直接从threading.Thread继承，然后重写__init__方法和run方法：
 
@@ -152,7 +152,7 @@ Exiting Thread-2
 
 ```
 
-## 4.线程同步
+## 4. 线程同步
 
 如果多个线程共同对某个数据修改，则可能出现不可预料的结果，为了保证数据的正确性，需要对多个线程进行同步。  
 使用Thread对象的Lock和Rlock可以实现简单的线程同步，这两个对象都有acquire方法和release方法，对于那些需要每次只允许一个线程操作的数据，可以将其操作放到acquire和release方法之间。如下：  
@@ -214,7 +214,7 @@ print "Exiting Main Thread"
 
 ```
 
-## 5.线程优先级队列（ Queue）
+## 5. 线程优先级队列（ Queue）
 
 Python的Queue模块中提供了同步的、线程安全的队列类，包括FIFO（先入先出)队列Queue，LIFO（后入先出）队列LifoQueue，和优先级队列PriorityQueue。这些队列都实现了锁原语，能够在多线程中直接使用。可以使用队列来实现线程间的同步。
 
@@ -315,7 +315,7 @@ Exiting Main Thread
 
 ```
 
-## 6.Python线程池
+## 6. Python线程池
 
 Python线程池需要使用threadpool,使用pip安装:
 pip install threadpool
