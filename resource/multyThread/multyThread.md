@@ -7,14 +7,14 @@
 * 程序的运行速度可能加快。  
 * 在一些等待的任务实现上如用户输入、文件读写和网络收发数据等，线程就比较有用了。在这种情况下我们可以释放一些珍贵的资源如内存占用等等。    
 
-线程在执行过程中与进程还是有区别的。每个独立的线程有一个程序运行的入口、顺序执行序列和程序的出口。但是线程不能够独立执行，必须依存在应用程序中，由应用程序提供多个线程执行控制。  
+线程在执行过程中与进程还是有区别的。每个独立的线程有一个程序运行的入口、顺序执行序列和程序的出口。但是线程不能够独立执行，必须依存在应用程序中，由应用程序提供多个线程执行控制。
 每个线程都有他自己的一组CPU寄存器，称为线程的上下文，该上下文反映了线程上次运行该线程的CPU寄存器的状态。  
 指令指针和堆栈指针寄存器是线程上下文中两个最重要的寄存器，线程总是在进程得到上下文中运行的，这些地址都用于标志拥有线程的进程地址空间中的内存。    
 
 * 线程可以被抢占（中断）。  
 * 在其他线程正在运行时，线程可以暂时搁置（也称为睡眠） -- 这就是线程的退让。  
   
-## 开始学习Python线程
+## 1.开始学习Python线程
 
 Python中使用线程有两种方式：函数或者用类来包装线程对象。  
 函数式：调用thread模块中的start_new_thread()函数来产生新线程。语法如下:  
@@ -70,7 +70,7 @@ Thread-2: Fri Jul 21 19:14:19 2017
 ```
 线程的结束一般依靠线程函数的自然结束；也可以在线程函数中调用thread.exit()，他抛出SystemExit exception，达到退出线程的目的。  
 
-## 线程模块  
+## 2.线程模块
 
 Python通过两个标准库thread和threading提供对线程的支持。thread提供了低级别的、原始的线程以及一个简单的锁。  
 thread 模块提供的其他方法：  
@@ -87,7 +87,7 @@ thread 模块提供的其他方法：
 * getName(): 返回线程名。  
 * setName(): 设置线程名。  
 
-## 使用Threading模块创建线程
+## 3.使用Threading模块创建线程
 
 使用Threading模块创建线程，直接从threading.Thread继承，然后重写__init__方法和run方法：
 
@@ -152,7 +152,8 @@ Exiting Thread-2
 
 ```
 
-## 线程同步
+## 4.线程同步
+
 如果多个线程共同对某个数据修改，则可能出现不可预料的结果，为了保证数据的正确性，需要对多个线程进行同步。  
 使用Thread对象的Lock和Rlock可以实现简单的线程同步，这两个对象都有acquire方法和release方法，对于那些需要每次只允许一个线程操作的数据，可以将其操作放到acquire和release方法之间。如下：  
 多线程的优势在于可以同时运行多个任务（至少感觉起来是这样）。但是当线程需要共享数据时，可能存在数据不同步的问题。  
@@ -161,6 +162,7 @@ Exiting Thread-2
 锁有两种状态——锁定和未锁定。每当一个线程比如"set"要访问共享数据时，必须先获得锁定；如果已经有别的线程比如"print"获得锁定了，那么就让线程"set"暂停，也就是同步阻塞；等到线程"print"访问完毕，释放锁以后，再让线程"set"继续。  
 经过这样的处理，打印列表时要么全部输出0，要么全部输出1，不会再出现一半0一半1的尴尬场面。  
 
+$ ./test3.py
 ```python
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
@@ -212,9 +214,10 @@ print "Exiting Main Thread"
 
 ```
 
-## 线程优先级队列（ Queue）
+## 5.线程优先级队列（ Queue）
 
-Python的Queue模块中提供了同步的、线程安全的队列类，包括FIFO（先入先出)队列Queue，LIFO（后入先出）队列LifoQueue，和优先级队列PriorityQueue。这些队列都实现了锁原语，能够在多线程中直接使用。可以使用队列来实现线程间的同步。  
+Python的Queue模块中提供了同步的、线程安全的队列类，包括FIFO（先入先出)队列Queue，LIFO（后入先出）队列LifoQueue，和优先级队列PriorityQueue。这些队列都实现了锁原语，能够在多线程中直接使用。可以使用队列来实现线程间的同步。
+
 Queue模块中的常用方法:  
 
 * Queue.qsize() 返回队列的大小  
@@ -310,4 +313,52 @@ Exiting Thread-2
 Exiting Thread-3
 Exiting Main Thread
 
+```
+
+## 6.Python线程池
+
+Python线程池需要使用threadpool,使用pip安装:
+pip install threadpool
+
+```
+pool = ThreadPool(poolsize)
+requests = makeRequests(some_callable, list_of_args, callback)
+[pool.putRequest(req) for req in requests]
+pool.wait()
+```
+
+第一行定义了一个线程池，表示最多可以创建poolsize这么多线程；
+第二行是调用makeRequests创建了要开启多线程的函数，以及函数相关参数和回调函数，其中回调函数可以不写，default是无，也就是说makeRequests只需要2个参数就可以运行；
+第三行用法比较奇怪，是将所有要运行多线程的请求扔进线程池，[pool.putRequest(req) for req in requests]等同于
+```
+for req in requests:
+    pool.putRequest(req)
+```
+第四行是等待所有的线程完成工作后退出。
+
+$ ./test4.py
+
+```
+import time
+import threadpool
+def sayhello(str):
+    print "Hello ",str
+    time.sleep(2)
+
+name_list =['xiaozi','aa','bb','cc']
+start_time = time.time()
+pool = threadpool.ThreadPool(10)
+requests = threadpool.makeRequests(sayhello, name_list)
+[pool.putRequest(req) for req in requests]
+pool.wait()
+print '%d second'% (time.time()-start_time)
+```
+
+以上程序执行结果：
+```
+Hello  xiaozi
+Hello  aa
+Hello  bb
+Hello  cc
+2 second
 ```
